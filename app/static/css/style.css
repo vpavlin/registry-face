@@ -1,0 +1,84 @@
+body {
+    margin: 0
+}
+
+.show-grid [class*="span"] {
+    border-color: black;
+    background-color: #eee;
+    text-align: center;
+    min-height: 50px;
+    border-radius: 3px;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+
+.card.image {
+    width: 350px;
+    position: relative;
+    display: inline-block;
+ //   height: 150px;
+    padding-top: 0;
+    margin-left: 20px;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.card .card-heading.simple {
+    font-size: 16px;
+}
+
+
+.nav-pills > li > a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.nav > li > a {
+    display: block;
+    background-color: #eee;
+}
+
+.nav-pills.nav-stacked > li > a {
+    margin-bottom: 3px;
+}
+
+.title {
+    border-top: 2px solid #fbfbfb;
+    font-size: 20px
+
+}
+
+.wrap .row-fluid [class*="span"] {
+    margin-left: 0px;
+    margin-right: 1%;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.wrap .row-fluid .active {
+    color: white;
+    background: #4d90fe;
+}
+
+.title-command {
+    float:right
+}
+
+input[type="checkbox"] {
+    margin: 0 0 0 10px;
+    vertical-align: middle;
+}
+
+input[type="text"] {
+    border-radius: 5px;
+    margin-bottom: 0
+}
+
+label {
+    margin-bottom: 20px;
+}

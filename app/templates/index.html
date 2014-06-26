@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{title}}</title>
+    <link href="/static/css/bootplus.min.css" rel="stylesheet" media="screen">
+    <link href="/static/css/style.css" rel="stylesheet" media="screen">
+    <link href="/static/css/bootplus-responsive.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+      <h1 class="text-center">Internal Docker Registry</h1>
+      <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span2">
+                <ul class="nav nav-pills nav-stacked" id="repositories">
+                    <li><input type="text" id="search" placeholder="Search" /></li>
+                    <li><label><input type="checkbox" id="remember-search" /> Remember search</label></li>
+                {% for repo in repos %}
+                    <li id="{{repo}}-repo"><a href="#{{repo}}">{{repo}}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="span10">
+                <div class="row show-grid">
+                  {% for item in data %}
+                  <div id="{{item}}" class="title muted"><span>{{item}}</span><a href="#" class="title-command">up</a></div>
+                  <div class="images">
+                    {% for image in data[item] %}
+                    <div class="card image">
+                        <div class="card-heading simple" repo="{{item}}">{{image.name}}</div>
+                        <div class="card-body">
+                            <dl>
+                                <dt>Latest</dt>
+                                <dd>{{image.short_id}}</dd>
+                                <dt>Last update</dt>
+                                <dd>{{image.last_update}}</dd>
+                                <dt>Tags</dt>
+                                <dd class="wrap">
+                                        <div class="row-fluid">
+                                         {% for tag in image.tags %}
+                                         <a class="span12 tag-ids {% if image.latest == tag.id %}active{% endif %}" title="{{tag.id}}" pull="{{tag.pull}}">{{image.name}}:{{tag.name}}</a>
+                                        {% endfor %}                           
+                                        </div>
+                                </dd>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                  {% endfor %}
+                </div>
+            </div>
+          </div>
+      </div>
+  </body>
+</html>
