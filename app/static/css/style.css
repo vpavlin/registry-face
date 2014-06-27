@@ -6,7 +6,7 @@ body {
     border-color: black;
     background-color: #eee;
     text-align: center;
-    min-height: 50px;
+    min-height: 30px;
     border-radius: 3px;
     line-height: 30px;
     margin-bottom: 20px;
@@ -24,9 +24,16 @@ body {
 }
 
 .card .card-heading.simple {
-    font-size: 16px;
+    font-size: 17px;
+    color: #fff;
+    line-height: 26px;
+    background-color: #555;
 }
 
+.card-body {
+    color: #777;
+    margin-top: 10px;
+}
 
 .nav-pills > li > a {
     padding-top: 8px;
@@ -66,7 +73,7 @@ body {
 }
 
 .title-command {
-    float:right
+    padding-left: 15px;
 }
 
 input[type="checkbox"] {
@@ -76,9 +83,32 @@ input[type="checkbox"] {
 
 input[type="text"] {
     border-radius: 5px;
-    margin-bottom: 0
+    margin-bottom: 0;
+    width: 88%;
+}
+
+#search {
+    display: block;
+    margin: 0 auto;
 }
 
 label {
     margin-bottom: 20px;
+}
+
+.pull-name input {
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    box-shadow: none;
+    transition: none;
+    border-top: none;
+    border-radius: 0;
+    color: #777;
+}
+
+.pull-name input:hover, .pull-name input:focus {
+    border: none;
+    box-shadow: none;
 }

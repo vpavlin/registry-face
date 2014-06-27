@@ -3,8 +3,8 @@
   <head>
     <title>{{title}}</title>
     <link href="/static/css/bootplus.min.css" rel="stylesheet" media="screen">
-    <link href="/static/css/style.css" rel="stylesheet" media="screen">
     <link href="/static/css/bootplus-responsive.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet" media="screen">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/script.js"></script>
@@ -16,7 +16,7 @@
           <div class="row-fluid">
             <div class="span2">
                 <ul class="nav nav-pills nav-stacked" id="repositories">
-                    <li><input type="text" id="search" placeholder="Search" /></li>
+                    <li><input type="text" id="search" placeholder="Search" autocomplete="off" /></li>
                     <li><label><input type="checkbox" id="remember-search" /> Remember search</label></li>
                 {% for repo in repos %}
                     <li id="{{repo}}-repo"><a href="#{{repo}}">{{repo}}</a></li>
@@ -30,9 +30,11 @@
                   <div class="images">
                     {% for image in data[item] %}
                     <div class="card image">
-                        <div class="card-heading simple" repo="{{item}}">{{image.name}}</div>
+                        <div class="card-heading simple" repo="{{item}}"><span>{{image.name}}</span> <a href="#q={{item}}/{{image.name}}" class="title-link">link</a></div>
                         <div class="card-body">
                             <dl>
+                                <dt>Pull name</dt>
+                                <dd class="pull-name"><input type="text" value="{% if prefix != "" %}{{prefix}}/{% endif %}{{item}}/{{image.name}}" /></dd>
                                 <dt>Latest</dt>
                                 <dd>{{image.short_id}}</dd>
                                 <dt>Last update</dt>
@@ -41,7 +43,7 @@
                                 <dd class="wrap">
                                         <div class="row-fluid">
                                          {% for tag in image.tags %}
-                                         <a class="span12 tag-ids {% if image.latest == tag.id %}active{% endif %}" title="{{tag.id}}" pull="{{tag.pull}}">{{image.name}}:{{tag.name}}</a>
+                                         <a href="#q={{item}}/{{image.name}}" class="span12 tag-ids {% if image.latest == tag.id %}active{% endif %}" title="{{tag.id}}" pull="{{tag.pull}}">{{image.name}}:{{tag.name}}</a>
                                         {% endfor %}                           
                                         </div>
                                 </dd>

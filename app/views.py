@@ -4,30 +4,16 @@ import os
 import requests
 import json
 import datetime
+from collections import OrderedDict
 
-#registry_path = "/var/lib/docker-registry/"
-registry_path = "/home/vpavlin/tmp/docker-registry"
+registry_path = "/var/lib/docker-registry/"
 
 @app.route('/')
 @app.route('/index')
 def index():
-#    response = requests.get('http://docker-registry.usersys.redhat.com/v1/search')
-#    data = response.json()
+    registry_path = app.reg_path
     repositories = set()
     images = {}
-#    for image in data['results']:
-#        repo = image["name"].split('/')
-#        repo_name = "No namespace"
-#        if repo[0] != image["name"]:
-#            repo_name = repo[0]
-#        repositories.add(repo_name)
-#        r = requests.get('http://docker-registry.usersys.redhat.com/v1/repositories/'+image['name']+'/tags/latest')
-#        image['id'] = r.text
-#        if repo_name in images:
-#            images[repo_name].append(image)
-#        else:
-#            images[repo_name] = [image]
-
     repos_path = os.path.join(registry_path, 'repositories')
     for d in os.listdir(repos_path):
         
@@ -47,7 +33,7 @@ def index():
 
                 if t[4:] == "latest":
                     latest = id
-                tags.append({'name':t[4:], 'id': id, 'pull': "docker-registry.usersys.redhat.com/"+d+"/"+i+":"+t[4:]})
+                tags.append({'name':t[4:], 'id': id, 'pull': app.reg_prefix+"/"+d+"/"+i+":"+t[4:]})
 
             path = os.path.join(image_path, "json")
             if os.path.exists(os.path.join(image_path, "taglatest_json")):
@@ -64,4 +50,4 @@ def index():
         if len(imgs_arr) > 0:
             repositories.add(d)
             images[d] = imgs_arr
-    return render_template("index.html", data = images, repos = sorted(repositories), title = "Registry Face")
+    return render_template("index.html", data = OrderedDict(sorted(images.items())), repos = sorted(repositories), prefix = app.reg_prefix, title = "Registry Face")
