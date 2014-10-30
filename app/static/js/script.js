@@ -87,13 +87,13 @@ $( document ).ready(function(){
              search(query, true)
          }
 
-         if (q == -1) {
+         if (q == -1 &&  window.location.hash.length > 0) {
              window.location = window.location;
          }
     }
 
     function search(query, exact){
-        if (localStorage['remember-search'] == "true") {
+        if (localStorage['remember-search'] == "true" && !exact) {
             localStorage['search-input']=query;
         } 
         if (!exact || query.length == 0) { 
