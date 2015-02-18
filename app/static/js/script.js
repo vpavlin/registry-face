@@ -47,13 +47,16 @@ $( document ).ready(function(){
     $('.tag-ids').click(function(e){
 //        alert($(this).attr('title'));
         if ($('#clipboard').length > 0 && $('#clipboard').hasClass($(this).html())) {
-            return
+            if ($(e.target).hasClass('tag-ids'))
+                $('#clipboard').remove()
+                return false
+            return 
         }
         
         $('#clipboard').remove()
 
         t = $('<input type="text" class="span12 '+$(this).html()+'" id="clipboard" />')
-        $(t).insertAfter(this);
+        $(t).insertAfter($(this).next());
         t.attr('value', $(this).attr('pull')).focus().select()
         e.preventDefault()
         e.stopPropagation()
@@ -70,6 +73,21 @@ $( document ).ready(function(){
         });
         
     });
+
+    $('.json-view').click(function(e){
+            e.preventDefault();
+
+            viewer = $('#json-viewer');
+            tag = $(this)
+
+            $.get($(this).attr('href'), function(data) {
+                viewer.addClass('full-screen')
+                viewer.find(".modal-title").html("Inspect json of <b>"+tag.prev().html()+"</b>");
+                viewer.find(".modal-body").html("<pre>"+JSON.stringify(data, null, 2)+"</pre>");
+                viewer.modal();
+            });
+
+        });
 
     $('#search').on('input',function(e){search($(this).val())});
     $('#search').keyup(function(e) {

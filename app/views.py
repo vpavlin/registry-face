@@ -1,4 +1,5 @@
 from flask import render_template
+from flask import jsonify
 from app import app
 import os
 import requests
@@ -14,6 +15,12 @@ def index():
     registry_path = app.reg_path
     repositories = set()
     images = {}
+    reg_prefix = app.reg_prefix
+
+    if len(app.reg_prefix):
+        reg_prefix = reg_prefix.rstrip("/")
+        reg_prefix += "/"
+
     repos_path = os.path.join(registry_path, 'repositories')
     for d in os.listdir(repos_path):
         
@@ -33,7 +40,7 @@ def index():
 
                 if t[4:] == "latest":
                     latest = id
-                tags.append({'name':t[4:], 'id': id, 'pull': app.reg_prefix+"/"+d+"/"+i+":"+t[4:]})
+                tags.append({'name':t[4:], 'id': id, 'pull': reg_prefix+d+"/"+i+":"+t[4:]})
 
             path = os.path.join(image_path, "json")
             if os.path.exists(os.path.join(image_path, "taglatest_json")):
@@ -50,4 +57,16 @@ def index():
         if len(imgs_arr) > 0:
             repositories.add(d)
             images[d] = imgs_arr
-    return render_template("index.html", data = OrderedDict(sorted(images.items())), repos = sorted(repositories), prefix = app.reg_prefix, title = "Registry Face")
+
+    title = "Registry face"
+    title += (" for %s" % reg_prefix.rstrip("/")) if len(reg_prefix) > 0 else ""
+    return render_template("index.html", data = OrderedDict(sorted(images.items())), repos = sorted(repositories), prefix = reg_prefix, title = title)
+
+@app.route('/json/<id>')
+def get_json(id):
+    content = {}
+    with open(os.path.join(app.reg_path, "images", id, "json"), "r") as fp:
+        content = json.load(fp)
+
+    return jsonify(**content)
+

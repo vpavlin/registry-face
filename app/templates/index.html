@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-      <h1 class="text-center">Internal Docker Registry</h1>
+  <h1 class="text-center">{{title}}</h1>
       <div class="container-fluid">
           <div class="row-fluid">
             <div class="span2">
@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <dl>
                                 <dt>Pull name</dt>
-                                <dd class="pull-name"><input type="text" value="{% if prefix != "" %}{{prefix}}/{% endif %}{{item}}/{{image.name}}" /></dd>
+                                <dd class="pull-name"><input type="text" value="{% if prefix != "" %}{{prefix}}{% endif %}{{item}}/{{image.name}}" /></dd>
                                 <dt>Latest</dt>
                                 <dd>{{image.short_id}}</dd>
                                 <dt>Last update</dt>
@@ -43,7 +43,7 @@
                                 <dd class="wrap">
                                         <div class="row-fluid">
                                          {% for tag in image.tags %}
-                                         <a href="#q={{item}}/{{image.name}}" class="span12 tag-ids {% if image.latest == tag.id %}active{% endif %}" title="{{tag.id}}" pull="{{tag.pull}}">{{image.name}}:{{tag.name}}</a>
+                                         <a href="#q={{item}}/{{image.name}}" class="span10 tag-ids {% if image.latest == tag.id %}active{% endif %}" title="{{tag.id}}" pull="{{tag.pull}}">{{image.name}}:{{tag.name}}</a><a class="span2 {% if image.latest == tag.id %}active{% endif %} json-view" href="/json/{{tag.id}}">json</a>
                                         {% endfor %}                           
                                         </div>
                                 </dd>
@@ -57,5 +57,21 @@
             </div>
           </div>
       </div>
+
+      <div class="modal fade" id="json-viewer">
+        <div class="modal-dialog ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title">Inspect json</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
   </body>
 </html>

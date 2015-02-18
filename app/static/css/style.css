@@ -112,3 +112,9 @@ label {
     border: none;
     box-shadow: none;
 }
+.modal {
+    width: 80%;
+    left: 25%;
+}
+.modal.fade {
+}
